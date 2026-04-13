@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroPrep Academy – Aviation Career Readiness Coaching</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: #222; }
+
+    /* NAV */
+    nav {
+      background: #1a2a4a;
+      display: flex;
+      align-items: center;
+      padding: 14px 32px;
+      gap: 20px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { font-size: 28px; }
+    .logo-text { line-height: 1.1; }
+    .logo-text .brand { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+    .logo-text .sub { font-size: 11px; color: #f0c040; letter-spacing: 3px; text-transform: uppercase; }
+    .nav-divider { width: 2px; height: 40px; background: #f0c040; margin: 0 16px; }
+    .nav-tagline h2 { color: #fff; font-size: 16px; font-weight: 700; }
+    .nav-tagline p { color: #ccd6f6; font-size: 13px; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 380px;
+      background: linear-gradient(135deg, #1a2a4a 0%, #2e4a7a 50%, #4a6fa5 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80') center/cover no-repeat;
+      opacity: 0.35;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px 20px 48px;
+    }
+    .hero-content h1 { font-size: 36px; color: #fff; font-weight: 900; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .hero-content h1 span { color: #f0c040; }
+    .hero-content p { margin-top: 10px; font-size: 16px; color: #e0e8ff; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
+    /* SERVICES */
+    .services { background: #f7f9fc; padding: 36px 32px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .service-card { background: #fff; border: 1px solid #dde3ee; border-radius: 6px; padding: 18px 20px; }
+    .service-card h3 { font-size: 14px; font-weight: 700; color: #1a2a4a; margin-bottom: 6px; }
+    .service-card p { font-size: 13px; color: #555; }
+
+    /* STEPS BAR */
+    .steps-bar {
+      background: #fff;
+      border-top: 2px solid #dde3ee;
+      border-bottom: 2px solid #dde3ee;
+      display: flex;
+      justify-content: center;
+    }
+    .step-btn {
+      background: #1a2a4a;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .step-btn:hover { background: #f0c040; color: #1a2a4a; }
+    .step-btn + .step-btn { border-left: 1px solid #2e4a7a; }
+
+    /* PRICING */
+    .pricing { max-width: 960px; margin: 0 auto; padding: 36px 32px; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f7f9fc;
+      border: 1px solid #dde3ee;
+      border-radius: 6px;
+      padding: 14px 20px;
+    }
+    .price-row .name { font-size: 15px; color: #1a2a4a; }
+    .price-row .name span { font-weight: 700; }
+    .price-tag {
+      background: #f0c040;
+      color: #1a2a4a;
+      font-weight: 900;
+      font-size: 17px;
+      padding: 6px 16px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* WHY US */
+    .why { background: #f7f9fc; padding: 36px 32px; text-align: center; }
+    .why h2 { font-size: 22px; font-weight: 800; color: #1a2a4a; margin-bottom: 20px; }
+    .why-list { list-style: none; display: inline-flex; flex-direction: column; gap: 12px; text-align: left; }
+    .why-list li { font-size: 15px; color: #333; display: flex; align-items: center; gap: 10px; }
+    .why-list li::before { content: '✔'; color: #f0c040; font-size: 16px; font-weight: 900; }
+    .why-list li span { font-weight: 700; }
+
+    /* CTA BANNER */
+    .cta-banner { background: #1a2a4a; text-align: center; padding: 22px 20px; }
+    .cta-banner p { font-size: 18px; color: #fff; font-weight: 600; }
+    .cta-banner p span { color: #f0c040; font-weight: 900; }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #f0c040;
+      color: #1a2a4a;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 12px 32px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #ffd700; }
+
+    /* FOOTER */
+    footer {
+      background: #1a2a4a;
+      border-top: 3px solid #f0c040;
+      padding: 22px 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 8px 32px;
+    }
+    .contact-item + .contact-item {
+      border-left: 1px solid rgba(255,255,255,0.2);
+    }
+    .contact-item .ci-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .ci-whatsapp { background: #25d366; }
+    .ci-email    { background: #0072c6; }
+    .ci-wechat   { background: #07c160; }
+    .contact-item .ci-label { font-size: 11px; color: #aab8d4; display: block; margin-bottom: 1px; }
+    .contact-item .ci-value { font-size: 14px; color: #fff; font-weight: 600; }
+
+    /* WeChat SVG icon */
+    .wechat-svg { width: 20px; height: 20px; fill: #fff; }
+
+    @media (max-width: 700px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .pricing-grid  { grid-template-columns: 1fr; }
+      .steps-bar     { flex-wrap: wrap; }
+      .step-btn      { flex: 1 1 45%; }
+      nav            { flex-wrap: wrap; }
+      .hero-content h1 { font-size: 24px; }
+      footer         { flex-direction: column; gap: 12px; }
+      .contact-item + .contact-item { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <div class="logo-icon">✈️</div>
+      <div class="logo-text">
+        <div class="brand">AEROPREP</div>
+        <div class="sub">— ACADEMY —</div>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-tagline">
+      <h2>Aviation Career Readiness Coaching</h2>
+      <p>Pilot &amp; Cabin Crew Interview Training</p>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1><span>Fly-Ready Confidence</span> for Your Aviation Career</h1>
+      <p>Structured coaching for interviews, English, CVs, grooming</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Pilot Interview Prep</h3>
+        <p>• HR + technical questions</p>
+      </div>
+      <div class="service-card">
+        <h3>CV &amp; Document Support</h3>
+        <p>• Resume + application forms</p>
+      </div>
+      <div class="service-card">
+        <h3>Job Search Strategy</h3>
+        <p>• Airline targeting + applications</p>
+      </div>
+      <div class="service-card">
+        <h3>Cabin Crew Interview Prep</h3>
+        <p>• Self-intro + service mindset</p>
+      </div>
+      <div class="service-card">
+        <h3>Job Search Strategy</h3>
+        <p>• Airline targeting + applications</p>
+      </div>
+      <div class="service-card">
+        <h3>Grooming &amp; Posture</h3>
+        <p>• First impressions + confidence</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS BAR -->
+  <div class="steps-bar">
+    <button class="step-btn">Book Entry Check</button>
+    <button class="step-btn">Get Gap Analysis</button>
+    <button class="step-btn">Choose Package</button>
+    <button class="step-btn">Train &amp; Practice</button>
+  </div>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="pricing-grid">
+      <div class="price-row">
+        <div class="name"><span>Aviation</span> Entry Check</div>
+        <div class="price-tag">HK$480</div>
+      </div>
+      <div class="price-row">
+        <div class="name">Cabin Crew Interview Ready</div>
+        <div class="price-tag">HK$1,980</div>
+      </div>
+      <div class="price-row">
+        <div class="name">CV &amp; Document Clinic</div>
+        <div class="price-tag">HK$980</div>
+      </div>
+      <div class="price-row">
+        <div class="name"><span>Pilot</span> Interview Ready</div>
+        <div class="price-tag">HK$2,980</div>
+      </div>
+      <div class="price-row">
+        <div class="name">Self-Intro Booster</div>
+        <div class="price-tag">HK$680</div>
+      </div>
+      <div class="price-row">
+        <div class="name">ICAO English Intensive</div>
+        <div class="price-tag">HK$4,880</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why">
+    <h2>Why Choose Us</h2>
+    <ul class="why-list">
+      <li>Specialized pilot + cabin crew coaching</li>
+      <li><span>Real</span> interview performance focus</li>
+      <li><span>Personalized</span> feedback + clear progress</li>
+      <li><span>Complete</span> aviation-career support</li>
+    </ul>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <p><em>Ready to Start?</em> Book Your <span>HK$480</span> Entry Check Today!</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="contact-item">
+      <div class="ci-icon ci-whatsapp">
+        <svg viewBox="0 0 24 24" class="wechat-svg" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </div>
+      <div>
+        <span class="ci-label">WhatsApp</span>
+        <span class="ci-value">+852 5998 9781</span>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="ci-icon ci-email">
+        <svg viewBox="0 0 24 24" class="wechat-svg" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </div>
+      <div>
+        <span class="ci-label">Email</span>
+        <span class="ci-value">aeroprepacademy@hotmail.com</span>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="ci-icon ci-wechat">
+        <svg viewBox="0 0 24 24" class="wechat-svg" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-3.898-6.348-7.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-7.062-6.122zm-3.74 2.633c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm3.814 0c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.969-.982z"/>
+        </svg>
+      </div>
+      <div>
+        <span class="ci-label">WeChat</span>
+        <span class="ci-value">aeroprepacademy</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

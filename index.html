@@ -602,15 +602,9 @@
     </div>
   </footer>
   <script>
-    // ── Keys ──────────────────────────────────────────────────────────────
-    // CountAPI: free global counter, shared across ALL devices/visitors
-    // Namespace + key uniquely identify this counter on countapi.xyz
-    var COUNT_NS  = 'aeroprep-academy';
-    var COUNT_KEY = 'daily-checkin-total';
-    var API_BASE  = 'https://countapi.mileshilliard.com';
-
-    // localStorage: only used to track whether THIS device already checked
-    // in today — prevents double-counting from the same browser
+    // ── CounterAPI v2 ─────────────────────────────────────────────────────
+    var API_BASE  = 'https://api.counterapi.dev/v2/deluyis-team-3890/first-counter-3890';
+    var API_TOKEN = 'ut_CRZialKhti9kQzcfaDFCWTaRG4At3QPq1zDBqtqy';
     var LOCAL_KEY = 'aeroprep_checkin_local';
 
     // ── Helpers ───────────────────────────────────────────────────────────
@@ -630,12 +624,16 @@
       localStorage.setItem(LOCAL_KEY, JSON.stringify(obj));
     }
 
+    function authHeaders() {
+      return { 'Authorization': 'Bearer ' + API_TOKEN };
+    }
+
     function setTotal(n) {
-      document.getElementById('ci-total').textContent = (n === null ? '…' : n);
+      document.getElementById('ci-total').textContent = (n === null || n === undefined) ? '—' : n;
     }
 
     function setBtn(checkedToday) {
-      var btn = document.getElementById('checkin-btn');
+      var btn   = document.getElementById('checkin-btn');
       var toast = document.getElementById('ci-toast');
       if (checkedToday) {
         btn.textContent = '✔ Checked In';
@@ -652,23 +650,23 @@
       }
     }
 
-    // ── Fetch global total (read-only hit) ────────────────────────────────
+    // ── GET current count ─────────────────────────────────────────────────
     function fetchTotal() {
-      fetch(API_BASE + '/get/' + COUNT_NS + '/' + COUNT_KEY)
+      fetch(API_BASE, { headers: authHeaders() })
         .then(function(r) { return r.json(); })
-        .then(function(d) { setTotal(d.value || 0); })
+        .then(function(d) { setTotal(d.count !== undefined ? d.count : d.value); })
         .catch(function()  { setTotal('—'); });
     }
 
-    // ── Increment global counter then update UI ───────────────────────────
+    // ── Increment (UP) then callback with new value ───────────────────────
     function incrementTotal(callback) {
-      fetch(API_BASE + '/hit/' + COUNT_NS + '/' + COUNT_KEY)
+      fetch(API_BASE + '/up', { headers: authHeaders() })
         .then(function(r) { return r.json(); })
-        .then(function(d) { callback(d.value || 0); })
+        .then(function(d) { callback(d.count !== undefined ? d.count : d.value); })
         .catch(function()  { callback(null); });
     }
 
-    // ── Check-in handler (called by button) ───────────────────────────────
+    // ── Check-in button handler ───────────────────────────────────────────
     function doCheckIn() {
       var local = getLocal();
       var today = todayStr();
@@ -681,41 +679,33 @@
         return;
       }
 
-      // Disable button immediately to prevent double-tap
       btn.disabled    = true;
       btn.textContent = 'Checking in…';
       toast.textContent = '';
 
       incrementTotal(function(newTotal) {
-        // Save to localStorage regardless of API result
         local.lastDate = today;
         setLocal(local);
-
         document.getElementById('ci-last').textContent = today;
         setBtn(true);
-
         if (newTotal !== null) {
           setTotal(newTotal);
           toast.textContent = '🎉 Check-in successful! Global total: ' + newTotal;
         } else {
-          // API failed — still mark as checked in locally
           fetchTotal();
-          toast.textContent = '🎉 Checked in! (Counter will update shortly)';
+          toast.textContent = '🎉 Checked in! (Counter updating…)';
         }
         toast.className = 'checkin-toast';
       });
     }
 
-    // ── Init on page load ─────────────────────────────────────────────────
+    // ── Init ──────────────────────────────────────────────────────────────
     (function init() {
-      var local   = getLocal();
-      var today   = todayStr();
-      var checked = (local.lastDate === today);
-
+      var local = getLocal();
       document.getElementById('ci-last').textContent = local.lastDate || '—';
-      setBtn(checked);
-      setTotal('…');   // show loading placeholder
-      fetchTotal();    // pull live global count
+      setBtn(local.lastDate === todayStr());
+      setTotal('…');
+      fetchTotal();
     })();
   </script>
 </body>

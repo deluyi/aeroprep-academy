@@ -652,18 +652,44 @@
 
     // ── GET current count ─────────────────────────────────────────────────
     function fetchTotal() {
-      fetch(API_BASE, { headers: authHeaders() })
-        .then(function(r) { return r.json(); })
-        .then(function(d) { setTotal(d.data ? d.data.up_count : '—'); })
-        .catch(function()  { setTotal('—'); });
+      fetch(API_BASE, {
+        method: 'GET',
+        headers: authHeaders()
+      })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(d) {
+          console.log('[CounterAPI] GET response:', JSON.stringify(d));
+          var val = d && d.data && d.data.up_count !== undefined ? d.data.up_count : null;
+          setTotal(val !== null ? val : '—');
+        })
+        .catch(function(e) {
+          console.error('[CounterAPI] GET error:', e);
+          setTotal('—');
+        });
     }
 
     // ── Increment (UP) then callback with new value ───────────────────────
     function incrementTotal(callback) {
-      fetch(API_BASE + '/up', { headers: authHeaders() })
-        .then(function(r) { return r.json(); })
-        .then(function(d) { callback(d.data ? d.data.up_count : null); })
-        .catch(function()  { callback(null); });
+      fetch(API_BASE + '/up', {
+        method: 'GET',
+        headers: authHeaders()
+      })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(d) {
+          console.log('[CounterAPI] UP response:', JSON.stringify(d));
+          var val = d && d.data && d.data.up_count !== undefined ? d.data.up_count : null;
+          callback(val);
+        })
+        .catch(function(e) {
+          console.error('[CounterAPI] UP error:', e);
+          callback(null);
+        });
     }
 
     // ── Check-in button handler ───────────────────────────────────────────

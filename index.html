@@ -654,7 +654,7 @@
     function fetchTotal() {
       fetch(API_BASE, { headers: authHeaders() })
         .then(function(r) { return r.json(); })
-        .then(function(d) { setTotal(d.count !== undefined ? d.count : d.value); })
+        .then(function(d) { setTotal(d.data ? d.data.up_count : '—'); })
         .catch(function()  { setTotal('—'); });
     }
 
@@ -662,7 +662,7 @@
     function incrementTotal(callback) {
       fetch(API_BASE + '/up', { headers: authHeaders() })
         .then(function(r) { return r.json(); })
-        .then(function(d) { callback(d.count !== undefined ? d.count : d.value); })
+        .then(function(d) { callback(d.data ? d.data.up_count : null); })
         .catch(function()  { callback(null); });
     }
 

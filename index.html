@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -602,116 +602,67 @@
     </div>
   </footer>
   <script>
-    // ── CounterAPI v2 ─────────────────────────────────────────────────────
     var API_BASE  = 'https://api.counterapi.dev/v2/deluyis-team-3890/first-counter-3890';
     var API_TOKEN = 'ut_CRZialKhti9kQzcfaDFCWTaRG4At3QPq1zDBqtqy';
     var LOCAL_KEY = 'aeroprep_checkin_local';
 
-    // ── Helpers ───────────────────────────────────────────────────────────
     function todayStr() {
       var d = new Date();
       return d.getFullYear() + '-' +
         String(d.getMonth() + 1).padStart(2, '0') + '-' +
         String(d.getDate()).padStart(2, '0');
     }
-
     function getLocal() {
-      try { return JSON.parse(localStorage.getItem(LOCAL_KEY)) || {}; }
-      catch (e) { return {}; }
+      try { return JSON.parse(localStorage.getItem(LOCAL_KEY)) || {}; } catch(e) { return {}; }
     }
-
-    function setLocal(obj) {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(obj));
+    function setLocal(obj) { localStorage.setItem(LOCAL_KEY, JSON.stringify(obj)); }
+    function apiUrl(path) {
+      return API_BASE + (path || '') + '?access_token=' + API_TOKEN;
     }
-
-    function authHeaders() {
-      return { 'Authorization': 'Bearer ' + API_TOKEN };
-    }
-
     function setTotal(n) {
       document.getElementById('ci-total').textContent = (n === null || n === undefined) ? '—' : n;
     }
-
     function setBtn(checkedToday) {
-      var btn   = document.getElementById('checkin-btn');
+      var btn = document.getElementById('checkin-btn');
       var toast = document.getElementById('ci-toast');
       if (checkedToday) {
-        btn.textContent = '✔ Checked In';
-        btn.disabled    = true;
-        btn.classList.add('done');
+        btn.textContent = '✔ Checked In'; btn.disabled = true; btn.classList.add('done');
         toast.textContent = 'You have already checked in today. See you tomorrow!';
-        toast.className   = 'checkin-toast warn';
+        toast.className = 'checkin-toast warn';
       } else {
-        btn.textContent = 'Check In Today ✔';
-        btn.disabled    = false;
-        btn.classList.remove('done');
-        toast.textContent = '';
-        toast.className   = 'checkin-toast';
+        btn.textContent = 'Check In Today ✔'; btn.disabled = false; btn.classList.remove('done');
+        toast.textContent = ''; toast.className = 'checkin-toast';
       }
     }
-
-    // ── GET current count ─────────────────────────────────────────────────
     function fetchTotal() {
-      fetch(API_BASE, {
-        method: 'GET',
-        headers: authHeaders()
-      })
-        .then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.json();
-        })
+      fetch(apiUrl())
+        .then(function(r) { return r.json(); })
         .then(function(d) {
-          console.log('[CounterAPI] GET response:', JSON.stringify(d));
           var val = d && d.data && d.data.up_count !== undefined ? d.data.up_count : null;
           setTotal(val !== null ? val : '—');
         })
-        .catch(function(e) {
-          console.error('[CounterAPI] GET error:', e);
-          setTotal('—');
-        });
+        .catch(function() { setTotal('—'); });
     }
-
-    // ── Increment (UP) then callback with new value ───────────────────────
     function incrementTotal(callback) {
-      fetch(API_BASE + '/up', {
-        method: 'GET',
-        headers: authHeaders()
-      })
-        .then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.json();
-        })
+      fetch(apiUrl('/up'))
+        .then(function(r) { return r.json(); })
         .then(function(d) {
-          console.log('[CounterAPI] UP response:', JSON.stringify(d));
           var val = d && d.data && d.data.up_count !== undefined ? d.data.up_count : null;
           callback(val);
         })
-        .catch(function(e) {
-          console.error('[CounterAPI] UP error:', e);
-          callback(null);
-        });
+        .catch(function() { callback(null); });
     }
-
-    // ── Check-in button handler ───────────────────────────────────────────
     function doCheckIn() {
-      var local = getLocal();
-      var today = todayStr();
+      var local = getLocal(); var today = todayStr();
       var toast = document.getElementById('ci-toast');
-      var btn   = document.getElementById('checkin-btn');
-
+      var btn = document.getElementById('checkin-btn');
       if (local.lastDate === today) {
         toast.textContent = 'Already checked in today. Come back tomorrow!';
-        toast.className   = 'checkin-toast warn';
-        return;
+        toast.className = 'checkin-toast warn'; return;
       }
-
-      btn.disabled    = true;
-      btn.textContent = 'Checking in…';
-      toast.textContent = '';
-
+      btn.disabled = true; btn.textContent = 'Checking in…'; toast.textContent = '';
       incrementTotal(function(newTotal) {
-        local.lastDate = today;
-        setLocal(local);
+        local.lastDate = today; setLocal(local);
         document.getElementById('ci-last').textContent = today;
         setBtn(true);
         if (newTotal !== null) {
@@ -724,8 +675,6 @@
         toast.className = 'checkin-toast';
       });
     }
-
-    // ── Init ──────────────────────────────────────────────────────────────
     (function init() {
       var local = getLocal();
       document.getElementById('ci-last').textContent = local.lastDate || '—';

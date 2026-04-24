@@ -28,28 +28,58 @@
     /* HERO */
     .hero {
       position: relative;
-      min-height: 380px;
-      background: linear-gradient(135deg, #1a2a4a 0%, #2e4a7a 50%, #4a6fa5 100%);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
       overflow: hidden;
+    }
+    .hero-photo {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      background: #1a2a4a;
     }
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80') center/cover no-repeat;
-      opacity: 0.35;
+      background: url('https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=1400&q=90') center center/cover no-repeat;
+      z-index: 0;
     }
-    .hero-content {
-      position: relative;
+    /* Dark overlay only in the centre band where text sits */
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 20, 45, 0.38);
+      z-index: 1;
+    }
+    /* Title centred over the image */
+    .hero-textbar {
+      position: absolute;
+      inset: 0;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 40px 20px 48px;
+      padding: 0 40px;
     }
-    .hero-content h1 { font-size: 36px; color: #fff; font-weight: 900; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-    .hero-content h1 span { color: #f0c040; }
-    .hero-content p { margin-top: 10px; font-size: 16px; color: #e0e8ff; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .hero-textbar h1 {
+      font-size: 34px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.25;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.9);
+      max-width: 800px;
+    }
+    .hero-textbar h1 span { color: #f0c040; font-style: italic; }
+    .hero-textbar h1 em   { color: #fff; font-weight: 400; font-style: normal; }
+    .hero-textbar p {
+      margin-top: 12px;
+      font-size: 16px;
+      color: #e8eef8;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+      max-width: 600px;
+    }
 
     /* SERVICES */
     .services { background: #f7f9fc; padding: 36px 32px; }
@@ -111,11 +141,64 @@
 
     /* WHY US */
     .why { background: #f7f9fc; padding: 36px 32px; text-align: center; }
-    .why h2 { font-size: 22px; font-weight: 800; color: #1a2a4a; margin-bottom: 20px; }
+    .why h2 { font-size: 22px; font-weight: 800; color: #1a2a4a; margin-bottom: 8px; }
+    .why-intro { max-width: 720px; margin: 0 auto 28px; font-size: 15px; color: #444; line-height: 1.7; text-align: left; }
+    .why-intro p + p { margin-top: 10px; }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto 28px;
+      text-align: left;
+    }
+    .diff-card {
+      background: #fff;
+      border: 1.5px solid #c8d6ee;
+      border-radius: 6px;
+      padding: 18px 20px;
+    }
+    .diff-card h3 { font-size: 14px; font-weight: 700; color: #1a6fa5; margin-bottom: 8px; }
+    .diff-card p  { font-size: 13px; color: #555; line-height: 1.6; }
+    .promise-box {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #1a2a4a;
+      border-radius: 6px;
+      padding: 20px 28px;
+      text-align: left;
+    }
+    .promise-box h3 { font-size: 14px; font-weight: 800; color: #f0c040; margin-bottom: 8px; font-style: italic; }
+    .promise-box p  { font-size: 14px; color: #e0e8ff; line-height: 1.7; font-style: italic; }
     .why-list { list-style: none; display: inline-flex; flex-direction: column; gap: 12px; text-align: left; }
     .why-list li { font-size: 15px; color: #333; display: flex; align-items: center; gap: 10px; }
     .why-list li::before { content: '✔'; color: #f0c040; font-size: 16px; font-weight: 900; }
     .why-list li span { font-weight: 700; }
+
+    /* PRICING TIERS */
+    .pricing-tiers { background: #fff; padding: 36px 32px; }
+    .pricing-tiers h2 { font-size: 22px; font-weight: 800; color: #1a2a4a; text-align: center; margin-bottom: 20px; }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .tier-card {
+      border: 1.5px solid #dde3ee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .tier-header {
+      background: #1a2a4a;
+      padding: 14px 20px;
+      text-align: center;
+    }
+    .tier-header h3 { font-size: 18px; font-weight: 900; color: #f0c040; }
+    .tier-header p  { font-size: 12px; color: #ccd6f6; margin-top: 4px; }
+    .tier-body { padding: 18px 20px; background: #f7f9fc; }
+    .tier-body p { font-size: 13px; color: #444; line-height: 1.7; }
 
     /* CTA BANNER */
     .cta-banner { background: #1a2a4a; text-align: center; padding: 22px 20px; }
@@ -134,6 +217,96 @@
       transition: background 0.2s;
     }
     .cta-btn:hover { background: #ffd700; }
+
+    /* CHECKIN */
+    .checkin-section {
+      background: #f0f4fa;
+      border-top: 2px solid #dde3ee;
+      border-bottom: 2px solid #dde3ee;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .checkin-section h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1a2a4a;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .checkin-section h3 span { color: #f0c040; }
+    .checkin-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 24px;
+      background: #fff;
+      border: 1.5px solid #dde3ee;
+      border-radius: 10px;
+      padding: 18px 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .checkin-stat {
+      text-align: center;
+      min-width: 90px;
+    }
+    .checkin-stat .stat-num {
+      font-size: 32px;
+      font-weight: 900;
+      color: #1a2a4a;
+      line-height: 1;
+    }
+    .checkin-stat .stat-num.gold { color: #c89a00; }
+    .checkin-stat .stat-label {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .checkin-divider {
+      width: 1px;
+      height: 48px;
+      background: #dde3ee;
+    }
+    .checkin-stat .stat-date {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a2a4a;
+      line-height: 1.3;
+    }
+    #checkin-btn {
+      background: #1a2a4a;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    #checkin-btn:hover:not(:disabled) { background: #2e4a7a; transform: translateY(-1px); }
+    #checkin-btn:disabled {
+      background: #a0b0c8;
+      cursor: not-allowed;
+      transform: none;
+    }
+    #checkin-btn.done {
+      background: #2a7a4a;
+    }
+    .checkin-toast {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      min-height: 18px;
+      color: #2a7a4a;
+    }
+    .checkin-toast.warn { color: #b06000; }
+    @media (max-width: 500px) {
+      .checkin-inner { padding: 16px 16px; gap: 14px; }
+      .checkin-divider { display: none; }
+    }
 
     /* FOOTER */
     footer {
@@ -172,7 +345,7 @@
     .ci-email    { background: #0072c6; }
     .ci-wechat   { background: #07c160; }
     .contact-item .ci-label { font-size: 11px; color: #aab8d4; display: block; margin-bottom: 1px; }
-    .contact-item .ci-value { font-size: 14px; color: #fff; font-weight: 600; }
+    .contact-item .ci-value { font-size: 13px; color: #fff; font-weight: 600; display: block; line-height: 1.5; }
 
     /* WeChat SVG icon */
     .wechat-svg { width: 20px; height: 20px; fill: #fff; }
@@ -180,10 +353,14 @@
     @media (max-width: 700px) {
       .services-grid { grid-template-columns: 1fr; }
       .pricing-grid  { grid-template-columns: 1fr; }
+      .diff-grid     { grid-template-columns: 1fr; }
+      .tiers-grid    { grid-template-columns: 1fr; }
       .steps-bar     { flex-wrap: wrap; }
       .step-btn      { flex: 1 1 45%; }
       nav            { flex-wrap: wrap; }
-      .hero-content h1 { font-size: 24px; }
+      .hero-photo    { height: 260px; }
+      .hero-textbar h1 { font-size: 22px; }
+      .hero-textbar  { padding: 0 20px; }
       footer         { flex-direction: column; gap: 12px; }
       .contact-item + .contact-item { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); }
     }
@@ -209,10 +386,12 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <h1><span>Fly-Ready Confidence</span> for Your Aviation Career</h1>
-      <p>Structured coaching for interviews, English, CVs, grooming</p>
+    <div class="hero-photo">
+      <div class="hero-bg"></div>
+      <div class="hero-textbar">
+        <h1><span>Fly-Ready Confidence</span> <em>for Your Aviation Career</em></h1>
+        <p>Structured coaching for interviews, English, CVs, grooming</p>
+      </div>
     </div>
   </section>
 
@@ -220,28 +399,28 @@
   <section class="services">
     <div class="services-grid">
       <div class="service-card">
-        <h3>Pilot Interview Prep</h3>
-        <p>• HR + technical questions</p>
+        <h3>Coaching &amp; Interview Support</h3>
+        <p>One-on-one coaching and structured interview preparation for pilot and cabin crew roles.</p>
       </div>
       <div class="service-card">
-        <h3>CV &amp; Document Support</h3>
-        <p>• Resume + application forms</p>
+        <h3>Aviation Job Search Guidance</h3>
+        <p>Targeted airline search strategy, application support, and career direction advice.</p>
       </div>
       <div class="service-card">
-        <h3>Job Search Strategy</h3>
-        <p>• Airline targeting + applications</p>
+        <h3>Flight Crew Licensing Guidance</h3>
+        <p>Practical guidance on licensing pathways, training routes, and regulatory requirements.</p>
       </div>
       <div class="service-card">
-        <h3>Cabin Crew Interview Prep</h3>
-        <p>• Self-intro + service mindset</p>
+        <h3>English Language Proficiency</h3>
+        <p>ICAO-focused speaking support and English preparation for aviation assessments.</p>
       </div>
       <div class="service-card">
-        <h3>Job Search Strategy</h3>
-        <p>• Airline targeting + applications</p>
+        <h3>Resume Building</h3>
+        <p>Aviation-specific CV writing and formatting to make your application stand out.</p>
       </div>
       <div class="service-card">
-        <h3>Grooming &amp; Posture</h3>
-        <p>• First impressions + confidence</p>
+        <h3>Document Proofreading</h3>
+        <p>Professional review and editing of cover letters, application forms, and supporting documents.</p>
       </div>
     </div>
   </section>
@@ -286,19 +465,102 @@
 
   <!-- WHY US -->
   <section class="why">
-    <h2>Why Choose Us</h2>
-    <ul class="why-list">
-      <li>Specialized pilot + cabin crew coaching</li>
-      <li><span>Real</span> interview performance focus</li>
-      <li><span>Personalized</span> feedback + clear progress</li>
-      <li><span>Complete</span> aviation-career support</li>
-    </ul>
+    <h2>Why Choose AeroPrep Academy?</h2>
+    <div class="why-intro">
+      <p>At AeroPrep Academy we do not just teach skills — we help open doors. The brand is built for young aviation candidates who want practical support, clearer direction, and stronger confidence as they work toward cockpit or cabin careers.</p>
+      <p>Backed by more than 30 years of international airline experience across recruiting, training, and former cadet pathways, AeroPrep Academy is designed to make aviation careers more accessible, affordable, and achievable for the next generation.</p>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <h3>Real-world guidance</h3>
+        <p>Course content and coaching are shaped by airline, training-centre, and selection-panel experience, so clients get practical advice instead of theory alone.</p>
+      </div>
+      <div class="diff-card">
+        <h3>Youth-first approach</h3>
+        <p>Bite-sized lessons, mobile-friendly tools, and peer-style support make learning more natural for younger aviation candidates.</p>
+      </div>
+      <div class="diff-card">
+        <h3>Practical outcomes</h3>
+        <p>Clients work toward real deliverables such as a ready-to-send CV, a 60-second pitch, and stronger interview confidence.</p>
+      </div>
+      <div class="diff-card">
+        <h3>Affordable access</h3>
+        <p>Low-cost starter packs, micro-services, and flexible entry points help lower the barrier to getting started.</p>
+      </div>
+      <div class="diff-card">
+        <h3>Supportive community</h3>
+        <p>Mentors, alumni, and a safe peer environment give clients a place to practise, share, and improve.</p>
+      </div>
+      <div class="diff-card">
+        <h3>Career-forward pathway</h3>
+        <p>Roadmaps can cover training costs, funding options, and realistic early-career planning so students can plan with more confidence.</p>
+      </div>
+    </div>
+    <div class="promise-box">
+      <h3>Our promise</h3>
+      <p>We help clients discover the right role, build the right application, and practise the right skills with encouragement, clear steps, and tools that fit real life. The goal is to get each client flight-ready, not just confident.</p>
+    </div>
+  </section>
+
+  <!-- PRICING TIERS -->
+  <section class="pricing-tiers">
+    <h2>Pricing Tiers</h2>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-header">
+          <h3>Starter</h3>
+          <p>Quick, affordable first step</p>
+        </div>
+        <div class="tier-body">
+          <p>Basic review, short session, or light document support — the ideal entry point to get started on your aviation journey.</p>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-header">
+          <h3>Standard</h3>
+          <p>Best value for most clients</p>
+        </div>
+        <div class="tier-body">
+          <p>Full review, live session, and a clearer action plan — everything most candidates need to prepare with confidence.</p>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-header">
+          <h3>Premium</h3>
+          <p>High-support option</p>
+        </div>
+        <div class="tier-body">
+          <p>Deeper coaching, multiple sessions, and faster turnaround — for candidates who want the most comprehensive support available.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- CTA BANNER -->
   <div class="cta-banner">
     <p><em>Ready to Start?</em> Book Your <span>HK$480</span> Entry Check Today!</p>
   </div>
+
+  <!-- DAILY CHECK-IN -->
+  <section class="checkin-section">
+    <h3>✈ Daily Check-In &nbsp;|&nbsp; <span>Track Your Journey</span></h3>
+    <div class="checkin-inner">
+      <div class="checkin-stat">
+        <div class="stat-num gold" id="ci-total">0</div>
+        <div class="stat-label">Total Check-ins</div>
+      </div>
+      <div class="checkin-divider"></div>
+      <div class="checkin-stat">
+        <div class="stat-date" id="ci-last">—</div>
+        <div class="stat-label">Last Check-in</div>
+      </div>
+      <div class="checkin-divider"></div>
+      <div>
+        <button id="checkin-btn" onclick="doCheckIn()">Check In Today ✔</button>
+        <div class="checkin-toast" id="ci-toast"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
@@ -323,6 +585,7 @@
       <div>
         <span class="ci-label">Email</span>
         <span class="ci-value">aeroprepacademy@hotmail.com</span>
+        <span class="ci-value">aeroprepacademy@gmail.com</span>
       </div>
     </div>
 
@@ -338,6 +601,75 @@
       </div>
     </div>
   </footer>
+  <script>
+    // localStorage key — unique per browser/device, fully isolated
+    var CI_KEY = 'aeroprep_checkin';
 
+    function todayStr() {
+      var d = new Date();
+      return d.getFullYear() + '-' +
+        String(d.getMonth() + 1).padStart(2, '0') + '-' +
+        String(d.getDate()).padStart(2, '0');
+    }
+
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(CI_KEY)) || { total: 0, lastDate: '' };
+      } catch (e) {
+        return { total: 0, lastDate: '' };
+      }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(CI_KEY, JSON.stringify(state));
+    }
+
+    function renderUI(state) {
+      var today = todayStr();
+      var btn   = document.getElementById('checkin-btn');
+      var toast = document.getElementById('ci-toast');
+
+      document.getElementById('ci-total').textContent = state.total;
+      document.getElementById('ci-last').textContent  = state.lastDate || '—';
+
+      if (state.lastDate === today) {
+        btn.textContent = '✔ Checked In';
+        btn.disabled    = true;
+        btn.classList.add('done');
+        toast.textContent = 'You have already checked in today. See you tomorrow!';
+        toast.className   = 'checkin-toast warn';
+      } else {
+        btn.textContent = 'Check In Today ✔';
+        btn.disabled    = false;
+        btn.classList.remove('done');
+        toast.textContent = '';
+        toast.className   = 'checkin-toast';
+      }
+    }
+
+    function doCheckIn() {
+      var state = loadState();
+      var today = todayStr();
+
+      if (state.lastDate === today) {
+        // Same day — no increment, just remind
+        document.getElementById('ci-toast').textContent = 'Already checked in today. Come back tomorrow!';
+        document.getElementById('ci-toast').className   = 'checkin-toast warn';
+        return;
+      }
+
+      state.total   += 1;
+      state.lastDate = today;
+      saveState(state);
+      renderUI(state);
+
+      var toast = document.getElementById('ci-toast');
+      toast.textContent = '🎉 Check-in successful! Total: ' + state.total + ' day' + (state.total > 1 ? 's' : '');
+      toast.className   = 'checkin-toast';
+    }
+
+    // Init on page load
+    renderUI(loadState());
+  </script>
 </body>
 </html>

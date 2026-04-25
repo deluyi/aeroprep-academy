@@ -669,10 +669,11 @@
           setTotal(newTotal);
           toast.textContent = '🎉 Check-in successful! Global total: ' + newTotal;
         } else {
-          fetchTotal();
           toast.textContent = '🎉 Checked in! (Counter updating…)';
         }
         toast.className = 'checkin-toast';
+        // Always re-fetch to confirm the latest global count
+        fetchTotal();
       });
     }
     (function init() {
